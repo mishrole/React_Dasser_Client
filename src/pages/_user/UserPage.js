@@ -16,7 +16,7 @@ export const UserPage = () => {
         <>
             <HeaderNav></HeaderNav>
 
-            <UserSearch></UserSearch>
+            <UserSearch setParams = { setParams }></UserSearch>
             
             <Container fluid>
                 <Row>

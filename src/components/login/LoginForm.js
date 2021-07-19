@@ -34,7 +34,6 @@ export const LoginForm = () => {
             requestToken({emailValue, passwordValue})
             .then(token => {
                 if(token.status === 200) {
-                    // localStorage.setItem('token', JSON.stringify(token));
                     setToken(token["access_token"], token["refresh_token"]);
                     setTokenError(false);
                     history.push(generatePath("/user"));

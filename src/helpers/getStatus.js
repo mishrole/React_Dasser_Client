@@ -2,8 +2,6 @@ import { refreshToken } from "./refreshToken";
 
 export const getStatus = async () => {
 
-    await refreshToken();
-
     const endpoint = 'http://localhost:9191/api/v1/status';
 
     const header = new Headers();
@@ -18,6 +16,8 @@ export const getStatus = async () => {
     
     const response = await fetch(endpoint, options);
     const data = await response.json();
+
+    await refreshToken();
 
     return data;
 
