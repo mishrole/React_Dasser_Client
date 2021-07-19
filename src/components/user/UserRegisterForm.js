@@ -131,7 +131,7 @@ export const UserRegisterForm = () => {
                             <Row>
                                 <Col xs={12} md={6}>
                                     <Form.Label>Status</Form.Label>
-                                    <Form.Control as="select" onChange={ handleStatusChange }>
+                                    <Form.Control value={statusValue} as="select" onChange={ handleStatusChange }>
                                         {
                                             status.map(status => {
                                                 return (
@@ -144,7 +144,7 @@ export const UserRegisterForm = () => {
 
                                 <Col xs={12} md={6}>
                                     <Form.Label>Role</Form.Label>
-                                    <Form.Control as="select" onChange={ handleRoleChange }>
+                                    <Form.Control value={roleValue} as="select" onChange={ handleRoleChange }>
                                         {
                                             roles.map(role => {
 

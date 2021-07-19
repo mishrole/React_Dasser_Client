@@ -54,7 +54,7 @@ export const UserSearch = ({ setParams }) => {
                                 <Form.Control value={emailValue} type="text" placeholder="Email" onChange={handleEmailChange}></Form.Control>
                             </Col>
                             <Col xs = {6} md = {2} className="my-2">
-                                <Form.Control as="select" onChange={handleStatusChange}>
+                                <Form.Control value={statusValue} as="select" onChange={handleStatusChange}>
                                     {
                                         status.map(status => {
                                             return (

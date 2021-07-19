@@ -5,7 +5,7 @@ import { Col, Container, Row } from "react-bootstrap";
 
 export const UserGrid = ({ params }) => {
 
-    const { users, loading } = useFetchUsers(params);
+    const { user: {users, loading}, setUser } = useFetchUsers(params);
 
     return (
         <>
@@ -19,7 +19,7 @@ export const UserGrid = ({ params }) => {
                             users.map(user => {
                                 return (
                                     <Col xs = { 12 } sm = { 6 } lg = { 4 } key = {`column-${user.id}`}>
-                                        <UserGridItem key={`gridItem-${user.id}`} {...user}/>
+                                        <UserGridItem setUser = {setUser} key={`gridItem-${user.id}`} {...user}/>
                                     </Col>
                                 )
                             })
