@@ -1,6 +1,6 @@
 import React from "react";
 import { useFetchStatus } from '../../hooks/useFetchStatus';
-import { Col, Form, Row } from "react-bootstrap"; 
+import { Col, Container, Form, Row } from "react-bootstrap"; 
 
 export const UserSearch = ({ setParams }) => {
 
@@ -8,17 +8,21 @@ export const UserSearch = ({ setParams }) => {
 
     return (
         <>
-            <Row>
-                <Col className="my-4" xs = {12}>
-                <Form.Control as="select">
-                <option value="red">Red</option>
-          <option value="blue">Blue</option>
-          <option value="green">Green</option>
-          <option value="black">Black</option>
-          <option value="orange">Orange</option>
-                </Form.Control>
-                </Col>
-            </Row>
+            <Container>
+                <Row>
+                    <Col className="my-4" xs = {2}>
+                    <Form.Control as="select">
+                        {
+                            status.map(status => {
+                                return (
+                                    <option key={`status-${status.id}`} value={status.id}>{status.name}</option>
+                                )
+                            })
+                        }
+                    </Form.Control>
+                    </Col>
+                </Row>
+            </Container>
         </>
     )
 }

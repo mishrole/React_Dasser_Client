@@ -19,21 +19,6 @@ export const getStatus = async () => {
     const response = await fetch(endpoint, options);
     const data = await response.json();
 
-    // if(response.ok) {
-
-    //     const refresh = await refreshToken();
-    //     console.log(refresh);
-
-    //     return data;
-
-        
-    // } else {
-    //     const refresh = await refreshToken();
-    //     const status = await getStatus();
-    //     console.log(refresh);
-    //     console.log(status);
-    // }
-
     return data;
 
 }
