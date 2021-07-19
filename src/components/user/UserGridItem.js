@@ -7,7 +7,7 @@ export const UserGridItem = ({id, lastname, firstname, login, status, roles, cre
     const history = useHistory();
 
     const handleClick = (userId) => () => {
-        history.push(generatePath("/user/:userId", {userId}));
+        history.push(generatePath("/user/edit/:userId", {userId}));
     }
 
     let badgeColor = '';

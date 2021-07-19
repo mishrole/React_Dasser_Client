@@ -14,7 +14,7 @@ const Root = () => {
             <Switch>
                 <Route path = "/login" component = { LoginPage } />
                 <Route path = "/user/create" component = { UserRegisterPage }/>
-                <Route path = "/user/:userId" component =  { UserIdPage }/>
+                <Route path = "/user/edit/:userId" component =  { UserIdPage }/>
                 <Route path = "/user" component = { UserPage } />
                 <Redirect from = "/" to = "/login" />
                 {/* <PrivateRoute path="/" component= {LoginPage}></PrivateRoute> */}

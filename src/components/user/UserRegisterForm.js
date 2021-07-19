@@ -4,9 +4,13 @@ import { postUser } from "../../helpers/postUser";
 import { useFetchRoles } from "../../hooks/useFetchRoles";
 import { useFetchStatus } from "../../hooks/useFetchStatus";
 
-export const UserForm = () => {
+export const UserRegisterForm = () => {
 
-    const [inputError, setInputError] = useState('');
+    const [displayAlert, setDisplayAlert] = useState({
+        isActive: false,
+        message: '',
+        type: ''
+    });
 
     const [emailValue, setEmailValue] = useState('');
     const [passwordValue, setPasswordValue] = useState('');
@@ -19,6 +23,20 @@ export const UserForm = () => {
 
     const { status } = useFetchStatus();
     const { roles } = useFetchRoles();
+
+    function alertMessage(message, type) {
+        setDisplayAlert({
+            isActive: true,
+            message: message,
+            type: type
+        });
+
+        setTimeout(function () { 
+            setDisplayAlert({
+                isActive: false
+            });
+        }, 4000);
+    }
 
     const handleLastnameChange = (event) => {
         setLastnameValue(event.target.value);
@@ -49,16 +67,10 @@ export const UserForm = () => {
 
         const data = {lastnameValue, firstnameValue, emailValue, passwordValue, roleValue, statusValue};
 
-        for (const input in data) {
-            if(input.trim().length > 0 && regexEmail.test(emailValue)) {
-                setInputError('');
-            } else {
-                setInputError(true);
-            }
-        }
-
-        if(!inputError) {
-            postUser(data)
+        if(lastnameValue.trim().length > 0 && firstnameValue.trim().length > 0 && emailValue.trim().length > 0
+        && passwordValue.trim().length > 0 && roleValue > 0 &&  statusValue > 0) {
+            if(regexEmail.test(emailValue)) {
+                postUser(data)
                 .then(user => {
                     if(user.title === 'Success') {
                         setLastnameValue('');
@@ -67,12 +79,21 @@ export const UserForm = () => {
                         setPasswordValue('');
                         setRoleValue(1);
                         setStatusValue(1);
-                        
-                    }
-                    alert(user.detail);
-                });
-        }
 
+                        alertMessage(user.detail, 'success');
+                        
+                    } else {
+                        alertMessage(user.detail, 'danger');
+                    }
+                }).catch(error => {
+                    console.error(error);
+                });
+            } else {
+                alertMessage('Enter a valid email address', 'danger');
+            }
+        } else {
+            alertMessage('All fields are required', 'danger');
+        }
     }
 
     return (
@@ -80,9 +101,8 @@ export const UserForm = () => {
             <Container>
                 <Row className="justify-content-center mt-2">
                 <Col className="my-4" xs = {12} md = {6}>
-
                         {
-                            inputError && <Alert variant={'danger'} className="my-5">All fields are required</Alert>
+                            displayAlert.isActive && <Alert variant={displayAlert.type} className="my-5">{displayAlert.message}</Alert>
                         }
 
                         <h3 className="text-center">New User</h3>
