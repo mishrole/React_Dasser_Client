@@ -1,19 +1,18 @@
 import { refreshToken } from "./refreshToken";
 
-export const getStatus = async () => {
-
-    const endpoint = 'http://localhost:9191/api/v1/status';
+export const getUserById = async (id) => {
+    const endpoint = `http://localhost:9191/api/v1/users/${id}`;
 
     const header = new Headers();
     header.append("Authorization", "Bearer" + localStorage.getItem('access_token'));
-    header.append("Content-Type",  "application/x-www-form-urlencoded");
-    
+    header.append("Content-Type",  "application/json");
+
     const options = {
         method: 'GET',
         headers: header,
         redirect: 'follow'
     };
-    
+
     let response = await fetch(endpoint, options);
 
     if(response.status === 401) {
@@ -21,9 +20,8 @@ export const getStatus = async () => {
         header.append("Authorization", "Bearer" + localStorage.getItem('access_token'));
         response = await fetch(endpoint, options);
     }
-    
+
     const data = await response.json();
 
     return data;
-
 }

@@ -38,7 +38,7 @@ export const LoginForm = () => {
             requestToken({emailValue, passwordValue})
             .then(token => {
                 if(token.status === 200) {
-                    setToken(token["access_token"], token["refresh_token"]);
+                    setToken(token["access_token"], token["refresh_token"], token["expires_in"]);
                     setTokenError(false);
 
                     dispatch({

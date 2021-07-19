@@ -8,14 +8,14 @@ export const UserGridItem = ({id, lastname, firstname, login, status, roles, cre
 
     const history = useHistory();
 
-    const handleClick = (id) => () => {
-        history.push(generatePath("/user/edit/:userId", {id}));
+    const handleClick = (userId) => () => {
+        history.push(generatePath("/user/edit/:userId", {userId}));
     }
 
     const handleDelete = () => {
         deletetUser(id)
         .then(response => {
-            console.log(response);
+            console.table(response);
             getUsers({lastname: '', login: '', status: 1})
             .then(user => {
                 setUser({

@@ -1,4 +1,4 @@
-// import { refreshToken } from "./refreshToken";
+import { refreshToken } from "./refreshToken";
 
 export const postUser = async ({lastnameValue, firstnameValue, emailValue, passwordValue, roleValue, statusValue}) => {
 
@@ -26,10 +26,14 @@ export const postUser = async ({lastnameValue, firstnameValue, emailValue, passw
         redirect: 'follow'
     };
 
-    const response = await fetch(endpoint, options);
-    const data = await response.json();
+    let response = await fetch(endpoint, options);
 
-    // await refreshToken();
+    if(response.status === 401) {
+        await refreshToken();
+        header.append("Authorization", "Bearer" + localStorage.getItem('access_token'));
+        response = await fetch(endpoint, options);
+    }
+    const data = await response.json();
 
     return data;
 }

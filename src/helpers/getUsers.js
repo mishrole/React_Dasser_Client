@@ -1,4 +1,4 @@
-import { refreshToken } from "./refreshToken";
+// import { refreshToken } from "./refreshToken";
 
 export const getUsers = async ({lastname = '', login = '', status = 1}) => {
 
@@ -8,7 +8,7 @@ export const getUsers = async ({lastname = '', login = '', status = 1}) => {
     const response = await fetch(URL);
     const data = await response.json();
 
-    await refreshToken();
+    // await refreshToken();
     
     return data;
 }
