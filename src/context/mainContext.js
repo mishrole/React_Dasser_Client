@@ -1,15 +1,23 @@
-import { createContext} from "react";
+import { createContext, useEffect, useReducer } from "react";
+import { authReducer } from "../auth/authReducer";
 
 const MainContext = createContext();
 
-const MainContextProvider = ({ children }) => {
+const init = () => {
+    return JSON.parse(localStorage.getItem('user')) || {
+        logged: false
+    }
+}
 
-    // const [params, setParams] = useState({lastname: '', login: '', status: 1});
-    // const { users } = useFetchUsers(params);
+const MainContextProvider = ({ children }) => {
+    const [user, dispatch] = useReducer(authReducer, {}, init);
+
+    useEffect(() => {
+        localStorage.setItem('user', JSON.stringify(user));
+    }, [user])
 
     return (
-        // <MainContext.Provider value={ {users} }>
-        <MainContext.Provider value = {{}}>
+        <MainContext.Provider value = {{ user, dispatch }}>
             { children }
         </MainContext.Provider>
     )

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useFetchStatus } from '../../hooks/useFetchStatus';
 import { Button, Col, Container, Form, Row } from "react-bootstrap"; 
+import { generatePath, useHistory } from "react-router-dom";
 
 export const UserSearch = ({ setParams }) => {
 
@@ -33,6 +34,12 @@ export const UserSearch = ({ setParams }) => {
         });
 
     }
+    
+    const history = useHistory();
+
+    const handleClick = () => {
+        history.push(generatePath("/user/create"));
+    }
 
     return (
         <>
@@ -40,13 +47,13 @@ export const UserSearch = ({ setParams }) => {
                 <Row className="my-4">
                     <Form onSubmit = {handleSubmit}>
                         <Row className="justify-content-center">
-                            <Col xs = {3}>
+                            <Col xs = {6} md = {3} className="my-2">
                                 <Form.Control value={lastnameValue} type="text" placeholder="Lastname" onChange={handleLastnameChange}></Form.Control>
                             </Col>
-                            <Col xs = {3}>
+                            <Col xs = {6} md = {3} className="my-2">
                                 <Form.Control value={emailValue} type="text" placeholder="Email" onChange={handleEmailChange}></Form.Control>
                             </Col>
-                            <Col xs = {2}>
+                            <Col xs = {6} md = {2} className="my-2">
                                 <Form.Control as="select" onChange={handleStatusChange}>
                                     {
                                         status.map(status => {
@@ -57,8 +64,11 @@ export const UserSearch = ({ setParams }) => {
                                     }
                                 </Form.Control>
                             </Col>
-                            <Col xs = {2} className="text-center">
+                            <Col xs = {3} md = {2} className="text-center my-2">
                                 <Button variant="dark" type="submit">Search</Button>
+                            </Col>
+                            <Col xs = {3} md = {1} className="text-center my-2">
+                                <Button variant="primary" type="submit" onClick={handleClick}>New</Button>
                             </Col>
                         </Row>
                     </Form>

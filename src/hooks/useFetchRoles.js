@@ -1,21 +1,21 @@
 import { useState, useEffect } from "react";
 import { getRoles } from "../helpers/getRoles";
 
-export const useFetchRoles = (params) => {
-    // const [user, setUser] = useState({
-    //     users: [],
-    //     loading: true
-    // });
+export const useFetchRoles = () => {
+    const [roles, setroles] = useState({
+        roles: [],
+        loading: true
+    });
 
-    // useEffect(() => {
-    //     getUsers(params)
-    //     .then(user => {
-    //         setUser({
-    //             users: user,
-    //             loading: false
-    //         });
-    //     });
-    // }, [params])
+    useEffect(() => {
+        getRoles()
+        .then(role => {
+            setroles({
+                roles: role,
+                loading: false
+            });
+        });
+    }, [])
 
-    // return user;
+    return roles;
 }

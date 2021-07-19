@@ -1,10 +1,14 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import { Row, Col, Container, Form, Button, Alert } from 'react-bootstrap';
 import { generatePath, useHistory } from 'react-router-dom';
+import MainContext from '../../context/mainContext';
 import { requestToken } from '../../helpers/requestToken';
 import { setToken } from '../../helpers/setToken';
+import { types } from '../../types/types';
 
 export const LoginForm = () => {
+
+    const { dispatch } = useContext( MainContext );
 
     const history = useHistory();
 
@@ -36,6 +40,15 @@ export const LoginForm = () => {
                 if(token.status === 200) {
                     setToken(token["access_token"], token["refresh_token"]);
                     setTokenError(false);
+
+                    dispatch({
+                        type: types.login,
+                        payload: {
+                            user: token
+                        }
+                    })
+
+
                     history.push(generatePath("/user"));
                 } else {
                     setTokenError(true);
