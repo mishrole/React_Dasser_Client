@@ -11,3 +11,32 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.card {
+  align-content: center;
+  border: 1px solid #ebebeb;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+  overflow: hidden;
+  height: fit-content;
+}
+
+.card:hover {
+  background-color: whitesmoke;
+}
+
+.card-body:hover {
+  cursor: pointer;
+}
+
+.badge-pill {
+  background-color: darkgrey;
+  margin-right: 0.3rem;
+  border-radius: 50rem !important;
+}
+
+.btn.btn-danger {
+  color: #dc3545;
+  background-color: transparent;
+  border: 0;
+}
