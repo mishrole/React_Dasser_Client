@@ -10,6 +10,22 @@ export const UserGridItem = ({id, lastname, firstname, login, status, roles, cre
         history.push(generatePath("/user/:userId", {userId}));
     }
 
+    let badgeColor = '';
+
+    switch(status.name) {
+        case 'Active':
+            badgeColor = 'badge-green';
+            break;
+        case 'Blocked':
+            badgeColor = 'badge-red';
+            break;
+        case 'Removed':
+            badgeColor = 'badge-gray';
+            break;
+        default:
+            badgeColor = 'badge-default';
+    }
+
     return (
         <>
             <CardGroup className="m-2 d-block animate__animated animate__fadeIn" key={`cardGroup-${id}`} onClick={handleClick(id)}>
@@ -17,14 +33,16 @@ export const UserGridItem = ({id, lastname, firstname, login, status, roles, cre
                     <Row>
                         <Col>
                             <Card.Body>
-                                    <span className="badge badge-pill">{status.name}</span>
+                                    {
+                                        <span className={`badge badge-pill ${badgeColor}`}>{status.name}</span>
+                                    }
                                     {
                                         roles.map(role => {
 
-                                            let name = role.name.substring(role.name.indexOf('_') + 1);
+                                            const name = role.name.substring(role.name.indexOf('_') + 1);
 
                                             return (
-                                                <span key={`badge-${role.id}`} className="badge badge-pill">{name.charAt(0) + name.substring(1, name.length).toLowerCase()}</span>
+                                                <span key={`badge-${role.id}`} className="badge badge-pill badge-default">{name.charAt(0) + name.substring(1, name.length).toLowerCase()}</span>
                                             );
 
                                         })

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Navbar, Nav, Container, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
 import { UserGrid } from '../../components/user/UserGrid';
 import { HeaderNav } from '../../components/header/HeaderNav';
+import { UserSearch } from '../../components/user/UserSearch';
 
 export const UserPage = () => {
 
@@ -15,6 +15,8 @@ export const UserPage = () => {
     return (
         <>
             <HeaderNav></HeaderNav>
+
+            <UserSearch></UserSearch>
             
             <Container fluid>
                 <Row>

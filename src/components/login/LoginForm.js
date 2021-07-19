@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { Row, Col, Container, Form, Button, Alert } from 'react-bootstrap';
 import { generatePath, useHistory } from 'react-router-dom';
 import { requestToken } from '../../helpers/requestToken';
+import { setToken } from '../../helpers/setToken';
 
 export const LoginForm = () => {
 
@@ -34,7 +35,7 @@ export const LoginForm = () => {
             .then(token => {
                 if(token.status === 200) {
                     // localStorage.setItem('token', JSON.stringify(token));
-                    localStorage.setItem('access_token', token["access_token"]);
+                    setToken(token["access_token"], token["refresh_token"]);
                     setTokenError(false);
                     history.push(generatePath("/user"));
                 } else {

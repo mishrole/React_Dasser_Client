@@ -30,13 +30,49 @@ code {
 }
 
 .badge-pill {
-  background-color: darkgrey;
+  background-color: transparent;
   margin-right: 0.3rem;
   border-radius: 50rem !important;
+}
+
+.badge-red {
+  background-color: #dc3545 !important;
+}
+
+.badge-green {
+  background-color: seagreen !important;
+}
+
+.badge-gray {
+  background-color: lightgray !important;
+}
+
+.badge-default {
+    background-color: royalblue !important;
 }
 
 .btn.btn-danger {
   color: #dc3545;
   background-color: transparent;
   border: 0;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #8886;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #88888887;
 }
