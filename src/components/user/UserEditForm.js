@@ -85,14 +85,13 @@ export const UserEditForm = ({userId}) => {
                 putUser(data)
                 .then(user => {
                     if(user.title === 'Success') {
-                        // clearForm();
                         alertMessage(user.detail, 'success');
                         
                     } else {
                         alertMessage(user.detail, 'danger');
                     }
                 }).catch(error => {
-                    console.error(error);
+                    alertMessage(error.message, 'danger');
                 });
             } else {
                 alertMessage('Enter a valid email address', 'danger');

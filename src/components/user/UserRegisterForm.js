@@ -93,7 +93,7 @@ export const UserRegisterForm = () => {
                         alertMessage(user.detail, 'danger');
                     }
                 }).catch(error => {
-                    console.error(error);
+                    alertMessage(error.message, 'danger');
                 });
             } else {
                 alertMessage('Enter a valid email address', 'danger');

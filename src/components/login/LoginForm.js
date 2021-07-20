@@ -74,7 +74,7 @@ export const LoginForm = () => {
 
                         history.push(generatePath("/user"));
                     } else {
-                        console.log(token)
+                        alertMessage("An error occurred while performing the operation", 'danger');
                     }
 
                 } else {

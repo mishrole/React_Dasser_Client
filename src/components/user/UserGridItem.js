@@ -19,7 +19,6 @@ export const UserGridItem = ({id, lastname, firstname, login, status, roles, cre
     const handleDelete = () => {
         deletetUser(id)
         .then(response => {
-            console.table(response);
             getUsers({lastname: '', login: '', status: 1})
             .then(user => {
                 setUser({
@@ -86,7 +85,6 @@ export const UserGridItem = ({id, lastname, firstname, login, status, roles, cre
                                 </Card.Text>
                             </Card.Body>
                             <div className="text-center d-flex justify-content-evenly">
-                                {/* <Button variant="dark" style={{'color': 'white'}}>Update</Button> */}
                                 <Button variant="danger" onClick={handleDelete}>Delete</Button>
                             </div>
                         </Col>
