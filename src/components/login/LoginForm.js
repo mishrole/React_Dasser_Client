@@ -12,12 +12,31 @@ export const LoginForm = () => {
 
     const history = useHistory();
 
-    const [tokenError, setTokenError] = useState(false);
     const [emailValue, setEmailValue] = useState('');
     const [emailError, setEmailError] = useState(false);
     const [passwordValue, setpasswordValue] = useState('');
 
     const regexEmail = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+
+    const [displayAlert, setDisplayAlert] = useState({
+        isActive: false,
+        message: '',
+        type: ''
+    });
+
+    function alertMessage(message, type) {
+        setDisplayAlert({
+            isActive: true,
+            message: message,
+            type: type
+        });
+
+        setTimeout(function () { 
+            setDisplayAlert({
+                isActive: false
+            });
+        }, 4000);
+    }
 
     const handleEmailChange = (event) => {
         setEmailValue(event.target.value);
@@ -38,20 +57,28 @@ export const LoginForm = () => {
             requestToken({emailValue, passwordValue})
             .then(token => {
                 if(token.status === 200) {
-                    setToken(token["access_token"], token["refresh_token"], token["expires_in"]);
-                    setTokenError(false);
 
-                    dispatch({
-                        type: types.login,
-                        payload: {
-                            user: token
-                        }
-                    })
+                    if(token["access"] === "Removed") {
+                        alertMessage("Authentication error, user has been removed", 'danger');
+                    } else if (token["access"] === "Blocked") {
+                        alertMessage("Authentication error, user has been blocked", 'danger');
+                    } else if (token["access"] === "Active") {
+                        setToken(token["access_token"], token["refresh_token"], token["expires_in"]);
 
+                        dispatch({
+                            type: types.login,
+                            payload: {
+                                user: token
+                            }
+                        });
 
-                    history.push(generatePath("/user"));
+                        history.push(generatePath("/user"));
+                    } else {
+                        console.log(token)
+                    }
+
                 } else {
-                    setTokenError(true);
+                    alertMessage("Authentication error, please check your credentials", 'danger');
                 }
             });
         }
@@ -64,7 +91,7 @@ export const LoginForm = () => {
                     <Col className="my-4" xs = {12} md = {6}>
                         
                         {
-                            tokenError && <Alert variant={'danger'} className="my-5">Authentication error, please check your credentials</Alert>
+                            displayAlert.isActive && <Alert variant={displayAlert.type} className="my-5">{displayAlert.message}</Alert>
                         }
 
                         <h3>Welcome Back!</h3>
