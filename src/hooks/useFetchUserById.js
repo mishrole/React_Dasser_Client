@@ -17,7 +17,5 @@ export const useFetchUserById = (userId) => {
         });
     }, [userId]);
 
-    console.log(userById)
-
     return userById;
 }

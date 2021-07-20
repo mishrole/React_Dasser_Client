@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap"
-import { useParams } from "react-router-dom";
-import { postUser } from "../../helpers/postUser";
+import { putUser } from "../../helpers/putUser";
 import { useFetchRoles } from "../../hooks/useFetchRoles";
 import { useFetchStatus } from "../../hooks/useFetchStatus";
 import { useFetchUserById } from "../../hooks/useFetchUserById";
@@ -34,55 +33,62 @@ export const UserEditForm = ({userId}) => {
         }, 4000);
     }
 
-    const [emailValue, setEmailValue] = useState('');
-    const [passwordValue, setPasswordValue] = useState('');
-    const [lastnameValue, setLastnameValue] = useState('');
-    const [firstnameValue, setFirstnameValue] = useState('');
-    const [statusValue, setStatusValue] = useState('');
-    const [roleValue, setRoleValue] = useState('');
+    const refEmail = useRef(null);
+    const refPassword = useRef(null);
+    const refLastname = useRef(null);
+    const refFirstname = useRef(null);
+    const refStatus = useRef(null);
+    const refRole = useRef(null);
 
-    const handleLastnameChange = (event) => {
-        setLastnameValue(event.target.value);
+    const refs = [refEmail, refFirstname, refLastname, refPassword, refStatus, refRole];
+
+    const formIsValid = () => {
+
+        let count = 0;
+        
+        refs.map(ref => {
+            if(ref.current.value.length > 0) {
+                count++;
+            }
+
+            return count;
+        });
+
+        if(count < refs.length) {
+            return false;
+        }
+
+        return true;
     }
 
-    const handleFirstnameChange = (event) => {
-        setFirstnameValue(event.target.value);
-    }
+    // const clearForm = () => {
+    //     refs.forEach((ref) => {
+    //         ref.current.value = '';
 
-    const handleEmailChange = (event) => {
-        setEmailValue(event.target.value);
-    }
-
-    const handlePasswordChange = (event) => {
-        setPasswordValue(event.target.value);
-    }
-
-    const handleStatusChange = (event) => {
-        setStatusValue(event.target.value);
-    }
-
-    const handleRoleChange = (event) => {
-        setRoleValue(event.target.value);
-    }
+    //         if(ref === refStatus || ref === refRole) {
+    //             ref.current.value = 1;
+    //         }
+    //     });
+    // }
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        const data = {lastnameValue, firstnameValue, emailValue, passwordValue, roleValue, statusValue};
+        const data = {
+            userId: userId,
+            lastnameValue: refLastname.current.value, 
+            firstnameValue: refFirstname.current.value, 
+            emailValue: refEmail.current.value, 
+            passwordValue: refPassword.current.value, 
+            roleValue: refRole.current.value, 
+            statusValue: refStatus.current.value};
 
-        if(lastnameValue.trim().length > 0 && firstnameValue.trim().length > 0 && emailValue.trim().length > 0
-        && passwordValue.trim().length > 0 && roleValue > 0 &&  statusValue > 0) {
-            if(regexEmail.test(emailValue)) {
-                postUser(data)
+        if(formIsValid) {
+            if(regexEmail.test(data.emailValue)) {
+                putUser(data)
                 .then(user => {
                     if(user.title === 'Success') {
-                        setLastnameValue('');
-                        setFirstnameValue('');
-                        setEmailValue('');
-                        setPasswordValue('');
-                        setRoleValue(1);
-                        setStatusValue(1);
-
+                        // clearForm();
                         alertMessage(user.detail, 'success');
                         
                     } else {
@@ -114,28 +120,28 @@ export const UserEditForm = ({userId}) => {
                                 <Form onSubmit= {handleSubmit}>
                                 <Form.Group className="mb-3" controlId="formBasicLastname">
                                     <Form.Label>Lastname</Form.Label>
-                                    <Form.Control value={ lastnameValue || userFound.lastname } type="text" placeholder="Enter lastname" autoComplete="off" onChange = {  handleLastnameChange }/>
+                                    <Form.Control ref={refLastname} defaultValue = { userFound.lastname } type="text" placeholder="Enter lastname" autoComplete="off" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formBasicFirstname">
                                     <Form.Label>Firstname</Form.Label>
-                                    <Form.Control value={ firstnameValue || userFound.firstname } type="text" placeholder="Enter firstname" autoComplete="off" onChange = { handleFirstnameChange }/>
+                                    <Form.Control ref={refFirstname} defaultValue = { userFound.firstname } type="text" placeholder="Enter firstname" autoComplete="off" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formBasicEmail">
                                     <Form.Label>Email address</Form.Label>
-                                    <Form.Control value={ emailValue || userFound.login } type="text" placeholder="Enter email" autoComplete="off" onChange = { handleEmailChange }/>
+                                    <Form.Control ref={refEmail} defaultValue = { userFound.login } type="text" placeholder="Enter email" autoComplete="off"/>
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formBasicPassword">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control value={ passwordValue } type="password" placeholder="Enter password" autoComplete="off" onChange={ (e) => handlePasswordChange(e) }/>
+                                    <Form.Control ref={refPassword} defaultValue = { '' } type="password" placeholder="Enter password" autoComplete="off"/>
                                 </Form.Group>
 
                                 <Row>
                                     <Col xs={12} md={6}>
                                         <Form.Label>Status</Form.Label>
-                                        <Form.Control value={ statusValue || userFound.status.id } as="select" onChange={ (e) => handleStatusChange(e) }>
+                                        <Form.Control defaultValue = { userFound.status.id } ref={refStatus} as="select">
                                             {
                                                 status.map(status => {
                                                     return (
@@ -148,7 +154,7 @@ export const UserEditForm = ({userId}) => {
 
                                     <Col xs={12} md={6}>
                                         <Form.Label>Role</Form.Label>
-                                        <Form.Control value={ roleValue || userFound.roles[0].id } as="select" onChange={ (e) => handleRoleChange(e) }>
+                                        <Form.Control defaultValue = { userFound.roles["0"].id } ref={refRole}  as="select">
                                             {
                                                 roles.map(role => {
 
@@ -168,7 +174,6 @@ export const UserEditForm = ({userId}) => {
                                 </div>
                             </Form>
                         </>
-
 
                         }
                     </Col>
