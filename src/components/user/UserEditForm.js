@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap"
+import { generatePath, useHistory } from "react-router-dom";
 import { putUser } from "../../helpers/putUser";
 import { useFetchRoles } from "../../hooks/useFetchRoles";
 import { useFetchStatus } from "../../hooks/useFetchStatus";
@@ -10,6 +11,12 @@ export const UserEditForm = ({userId}) => {
     const { status } = useFetchStatus();
     const { roles } = useFetchRoles();
     const { userFound, loading } = useFetchUserById(userId);
+
+    const history = useHistory();
+
+    if(status.error || roles.error || userFound.error ) {
+        history.push(generatePath("/"));
+    }
 
     const [displayAlert, setDisplayAlert] = useState({
         isActive: false,
@@ -61,16 +68,6 @@ export const UserEditForm = ({userId}) => {
         return true;
     }
 
-    // const clearForm = () => {
-    //     refs.forEach((ref) => {
-    //         ref.current.value = '';
-
-    //         if(ref === refStatus || ref === refRole) {
-    //             ref.current.value = 1;
-    //         }
-    //     });
-    // }
-
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -107,7 +104,8 @@ export const UserEditForm = ({userId}) => {
 
     return (
         <>
-            <Container>
+            {
+                !userFound.error && <Container>
                 <Row className="justify-content-center mt-2">
                 <Col className="my-4" xs = {12} md = {6}>
                         {
@@ -179,6 +177,7 @@ export const UserEditForm = ({userId}) => {
                     </Col>
                 </Row>
             </Container>
+            }
         </>
     )
 

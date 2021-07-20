@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap"
+import { generatePath, useHistory } from "react-router-dom";
 import { postUser } from "../../helpers/postUser";
 import { useFetchRoles } from "../../hooks/useFetchRoles";
 import { useFetchStatus } from "../../hooks/useFetchStatus";
@@ -23,6 +24,12 @@ export const UserRegisterForm = () => {
 
     const { status } = useFetchStatus();
     const { roles } = useFetchRoles();
+
+    const history = useHistory();
+
+    if(status.error || roles.error ) {
+        history.push(generatePath("/"));
+    }
 
     function alertMessage(message, type) {
         setDisplayAlert({
@@ -98,7 +105,8 @@ export const UserRegisterForm = () => {
 
     return (
         <>
-            <Container>
+            {
+                !status.error && !roles.error && <Container>
                 <Row className="justify-content-center mt-2">
                 <Col className="my-4" xs = {12} md = {6}>
                         {
@@ -166,6 +174,7 @@ export const UserRegisterForm = () => {
                     </Col>
                 </Row>
             </Container>
+            }
         </>
     )
 

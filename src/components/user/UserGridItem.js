@@ -12,6 +12,10 @@ export const UserGridItem = ({id, lastname, firstname, login, status, roles, cre
         history.push(generatePath("/user/edit/:userId", {userId}));
     }
 
+    if(!id ) {
+        history.push(generatePath("/"));
+    }
+
     const handleDelete = () => {
         deletetUser(id)
         .then(response => {
@@ -25,26 +29,29 @@ export const UserGridItem = ({id, lastname, firstname, login, status, roles, cre
             });
         })
     }
-
+    
     let badgeColor = '';
 
-    switch(status.name) {
-        case 'Active':
-            badgeColor = 'badge-green';
-            break;
-        case 'Blocked':
-            badgeColor = 'badge-red';
-            break;
-        case 'Removed':
-            badgeColor = 'badge-gray';
-            break;
-        default:
-            badgeColor = 'badge-default';
-    }
+    if(status) {
+        switch(status.name) {
+            case 'Active':
+                badgeColor = 'badge-green';
+                break;
+            case 'Blocked':
+                badgeColor = 'badge-red';
+                break;
+            case 'Removed':
+                badgeColor = 'badge-gray';
+                break;
+            default:
+                badgeColor = 'badge-default';
+        }
+   }
 
     return (
         <>
-            <CardGroup className="m-2 d-block animate__animated animate__fadeIn" key={`cardGroup-${id}`}>
+            {
+                id && <CardGroup className="m-2 d-block animate__animated animate__fadeIn" key={`cardGroup-${id}`}>
                 <Card className="border-1 py-3" style={{'borderColor': '#ececec'}}>
                     <Row>
                         <Col>
@@ -86,6 +93,7 @@ export const UserGridItem = ({id, lastname, firstname, login, status, roles, cre
                     </Row>
                 </Card>
             </CardGroup>
+            }
         </>
     )
 }

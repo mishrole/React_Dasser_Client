@@ -5,7 +5,6 @@ import { generatePath, useHistory } from "react-router-dom";
 
 export const UserSearch = ({ setParams }) => {
 
-    // const { status, loading } = useFetchStatus();
     const { status } = useFetchStatus();
 
     const [lastnameValue, setLastnameValue] = useState('');
@@ -37,13 +36,18 @@ export const UserSearch = ({ setParams }) => {
     
     const history = useHistory();
 
+    if(status.error ) {
+        history.push(generatePath("/"));
+    }
+
     const handleClick = () => {
         history.push(generatePath("/user/create"));
     }
 
     return (
         <>
-            <Container>
+            {
+                !status.error && <Container>
                 <Row className="my-4">
                     <Form onSubmit = {handleSubmit}>
                         <Row className="justify-content-center">
@@ -74,6 +78,7 @@ export const UserSearch = ({ setParams }) => {
                     </Form>
                 </Row>
             </Container>
+            }
         </>
     )
 }

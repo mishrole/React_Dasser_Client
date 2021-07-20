@@ -4,7 +4,7 @@ import { generatePath, Link, useHistory } from "react-router-dom";
 import MainContext from "../../context/mainContext";
 import { types } from "../../types/types";
 
-export const HeaderNav = (param) => {
+export const HeaderNav = () => {
 
     const { user, dispatch } = useContext(MainContext);
 
@@ -13,7 +13,11 @@ export const HeaderNav = (param) => {
     const handleLogout = () => {
         dispatch({
             type: types.logout
-        })
+        });
+
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('expires_in');
 
         history.push(generatePath("/login"));
     }

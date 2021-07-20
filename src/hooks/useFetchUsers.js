@@ -17,5 +17,7 @@ export const useFetchUsers = (params) => {
         });
     }, [params])
 
+    console.log(user)
+
     return {user, setUser};
 }

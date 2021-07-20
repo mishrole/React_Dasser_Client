@@ -2,14 +2,22 @@ import React from "react";
 import { UserGridItem } from "./UserGridItem";
 import { useFetchUsers } from '../../hooks/useFetchUsers';
 import { Col, Container, Row } from "react-bootstrap";
+import { generatePath, useHistory } from "react-router-dom";
 
 export const UserGrid = ({ params }) => {
 
     const { user: {users, loading}, setUser } = useFetchUsers(params);
 
+    const history = useHistory();
+
+    if(users.error ) {
+        history.push(generatePath("/"));
+    }
+
     return (
         <>
-            <div className="card-grid">
+            {
+                !users.error && <div className="card-grid">
                 <Container>
                     <Row>
                         {
@@ -27,6 +35,7 @@ export const UserGrid = ({ params }) => {
                     </Row>
                 </Container>
             </div>
+            }
         </>
     )
 }
