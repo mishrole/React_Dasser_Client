@@ -19,7 +19,7 @@ export const UserSearch = ({ setParams }) => {
                 status: statusValue
             });
         },
-        [lastnameValue, emailValue, statusValue]
+        [lastnameValue, emailValue, statusValue, setParams]
       );
 
     const handleEmailChange = (event) => {
