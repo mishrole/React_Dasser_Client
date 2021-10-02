@@ -5,7 +5,7 @@ export const getUsers = async ({lastname = '', login = '', status = 1}) => {
     let access_token = localStorage.getItem('access_token');
 
     if(access_token && access_token.length > 0) {
-        const endpoint = 'http://localhost:9191/api/v1/users/search';
+        const endpoint = 'https://dasserapi.herokuapp.com/api/v1/users/search';
         const URL = `${endpoint}?name=${lastname}&login=${login}&status=${status}`;
         
         const header = new Headers();

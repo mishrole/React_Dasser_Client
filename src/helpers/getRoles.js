@@ -5,7 +5,7 @@ export const getRoles = async () => {
     let access_token = localStorage.getItem('access_token');
 
     if(access_token && access_token.length > 0) {
-        const endpoint = 'http://localhost:9191/api/v1/roles';
+        const endpoint = 'https://dasserapi.herokuapp.com/api/v1/roles';
 
         const header = new Headers();
         header.append("Authorization", "Bearer" + access_token);

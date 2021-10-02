@@ -1,5 +1,5 @@
 export const requestToken = async ({emailValue, passwordValue}) => {
-    const endpoint = 'http://localhost:9191/oauth/token';
+    const endpoint = 'https://dasserapi.herokuapp.com/oauth/token';
     
     const header = new Headers();
     header.append("Authorization", "Basic ZGFzc2VyOjEyMzQ=");

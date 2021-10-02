@@ -2,7 +2,7 @@ import { setToken } from "./setToken";
 
 export const refreshToken = async () => {
 
-    const endpoint = 'http://localhost:9191/oauth/token';
+    const endpoint = 'https://dasserapi.herokuapp.com/oauth/token';
 
     const refresh_token = localStorage.getItem('refresh_token');
 
