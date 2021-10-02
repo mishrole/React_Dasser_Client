@@ -4,7 +4,7 @@ import { LoginPage } from '../pages/_login/LoginPage';
 import { UserIdPage } from '../pages/_user/UserIdPage';
 import { UserPage } from '../pages/_user/UserPage';
 import { UserRegisterPage } from '../pages/_user/UserRegisterPage';
-import { PrivateRoute } from './PrivateRoute';
+//import { PrivateRoute } from './PrivateRoute';
 
 const Root = (/*{value}*/) => {
 

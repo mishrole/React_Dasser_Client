@@ -68,7 +68,7 @@ export const UserSearch = ({ setParams }) => {
                                     }
                                 </Form.Control>
                             </Col>
-                            <Col xs = {3} md = {1} className="text-center my-2">
+                            <Col xs = {6} md = {4} className="text-center my-2">
                                 <Button variant="primary" type="button" onClick={handleClick}>New</Button>
                             </Col>
                         </Row>
