@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFetchStatus } from '../../hooks/useFetchStatus';
 import { Button, Col, Container, Form, Row } from "react-bootstrap"; 
 import { generatePath, useHistory } from "react-router-dom";
@@ -11,6 +11,17 @@ export const UserSearch = ({ setParams }) => {
     const [emailValue, setEmailValue] = useState('');
     const [statusValue, setStatusValue] = useState(1);
 
+    useEffect(
+        () => {
+            setParams({
+                lastname: lastnameValue,
+                login: emailValue,
+                status: statusValue
+            });
+        },
+        [lastnameValue, emailValue, statusValue]
+      );
+
     const handleEmailChange = (event) => {
         setEmailValue(event.target.value);
     }
@@ -20,18 +31,7 @@ export const UserSearch = ({ setParams }) => {
     }
 
     const handleStatusChange = (event) => {
-        setStatusValue(event.target.value);
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        
-        setParams({
-            lastname: lastnameValue,
-            login: emailValue,
-            status: statusValue
-        });
-
+        setStatusValue(event.target.options[event.target.options.selectedIndex].value);
     }
     
     const history = useHistory();
@@ -49,7 +49,7 @@ export const UserSearch = ({ setParams }) => {
             {
                 !status.error && <Container>
                 <Row className="my-4">
-                    <Form onSubmit = {handleSubmit}>
+                    <Form>
                         <Row className="justify-content-center">
                             <Col xs = {6} md = {3} className="my-2">
                                 <Form.Control value={lastnameValue} type="text" placeholder="Lastname" onChange={handleLastnameChange}></Form.Control>
@@ -68,11 +68,8 @@ export const UserSearch = ({ setParams }) => {
                                     }
                                 </Form.Control>
                             </Col>
-                            <Col xs = {3} md = {2} className="text-center my-2">
-                                <Button variant="dark" type="submit">Search</Button>
-                            </Col>
                             <Col xs = {3} md = {1} className="text-center my-2">
-                                <Button variant="primary" type="submit" onClick={handleClick}>New</Button>
+                                <Button variant="primary" type="button" onClick={handleClick}>New</Button>
                             </Col>
                         </Row>
                     </Form>
